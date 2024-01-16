@@ -34,7 +34,7 @@ app.get("/docs", (req, res) => {
 app.get("/api/cohorts", (req, res) => {
   res.json(cohorts);
 });
-app.get("/api/git", (req, res) => {
+app.get("/api/students", (req, res) => {
   res.json(students);
 });
 // START SERVER
