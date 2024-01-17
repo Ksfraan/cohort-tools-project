@@ -64,7 +64,7 @@ app.post('/api/students', async (request, response) => {
     }
 })
 
-// Get all of the students for a given cohort NOT FINISHED
+// Get all of the students for a given cohort 
 app.get("/api/students/cohort/:cohortId", async (request, response) => {
   const { cohortId } = request.params
   const studentsFromGivenCohort = await Student.find({cohort:`${cohortId}`})
@@ -159,29 +159,6 @@ app.delete('/api/cohorts/:cohortId', async (request, response) => {
     response.status(500).json({ message: 'Something bad happened' })
   }
 })
-
-/* app.get("/students", (req, res) => {
-  Student.find({})
-    .then((students) => {
-      console.log("Retrieved students ->", students);
-      res.json(students);
-    })
-    .catch((error) => {
-      console.error("Error while retrieving students ->", error);
-      res.status(500).send({ error: "Failed to retrieve students" });
-    });
-});
-app.get("/cohorts", (req, res) => {
-  Cohort.find({})
-    .then((cohorts) => {
-      console.log("Retrieved cohorts ->", cohorts);
-      res.json(cohorts);
-    })
-    .catch((error) => {
-      console.error("Error while retrieving cohorts ->", error);
-      res.status(500).send({ error: "Failed to retrieve cohorts" });
-    });
-}); */
 
 
 // START SERVER
