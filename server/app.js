@@ -39,127 +39,144 @@ mongoose
   .catch((err) => console.error("Error connecting to MongoDB", err));
 
 // DOCS ROUTES
-  app.get("/docs", (req, res) => {
-    res.sendFile(__dirname + "/views/docs.html");
-  });
+app.get("/docs", (req, res) => {
+  res.sendFile(__dirname + "/views/docs.html");
+});
 
 // STUDENTS ROUTES
 // Get all students
 app.get("/api/students", async (request, response) => {
-  const students = await Student.find()
+  const students = await Student.find().populate("cohort");
 
-  response.json(students)
-})
+  response.json(students);
+});
 
 // Create one student
-app.post('/api/students', async (request, response) => {
-  console.log(request.body)
-  const payload = request.body
+app.post("/api/students", async (request, response) => {
+  console.log(request.body);
+  const payload = request.body;
   try {
-    const newStudent = await Student.create(payload)
-    response.status(201).json(newStudent)
+    const newStudent = await Student.create(payload);
+    response.status(201).json(newStudent);
   } catch (error) {
-    console.log(error)
-    response.status(500).json({ error, message: 'Somethin happened maybe on the server' })
-    }
-})
+    console.log(error);
+    response
+      .status(500)
+      .json({ error, message: "Somethin happened maybe on the server" });
+  }
+});
 
-// Get all of the students for a given cohort 
+// Get all of the students for a given cohort
 app.get("/api/students/cohort/:cohortId", async (request, response) => {
-  const { cohortId } = request.params
-  const studentsFromGivenCohort = await Student.find({cohort:`${cohortId}`})
+  const { cohortId } = request.params;
+  const studentsFromGivenCohort = await Student.find({
+    cohort: `${cohortId}`,
+  }).populate("cohort");
 
-  response.json(studentsFromGivenCohort)
-})
+  response.json(studentsFromGivenCohort);
+});
 
 // Get a specific student by id
-app.get('/api/students/:studentId', async (request, response) => {
-  const { studentId } = request.params
+app.get("/api/students/:studentId", async (request, response) => {
+  const { studentId } = request.params;
 
-  const oneStudent = await Student.findById(studentId)
+  const oneStudent = await Student.findById(studentId).populate("cohort");
 
-  response.json(oneStudent)
-})
+  response.json(oneStudent);
+});
 
 // Update a specific student by id
-app.put('/api/students/:studentId', async (request, response) => {
-  console.log(request.body)
-  const payload = request.body
+app.put("/api/students/:studentId", async (request, response) => {
+  console.log(request.body);
+  const payload = request.body;
   try {
-    const updatedStudent = await Student.findByIdAndUpdate(request.params.studentId, payload, { new: true })
-    response.status(202).json(updatedStudent)
+    const updatedStudent = await Student.findByIdAndUpdate(
+      request.params.studentId,
+      payload,
+      { new: true }
+    );
+    response.status(202).json(updatedStudent);
   } catch (error) {
-    console.log(error)
-    response.status(500).json({ message: 'Something bad happened' })
+    console.log(error);
+    response.status(500).json({ message: "Something bad happened" });
   }
-})
+});
 
 // Delete a specific student by id
-app.delete('/api/students/:studentId', async (request, response) => {
-  const { studentId } = request.params
+app.delete("/api/students/:studentId", async (request, response) => {
+  const { studentId } = request.params;
   try {
-    const studentToDelete = await Student.findByIdAndDelete(studentId)
-    response.status(202).json({ message: `${studentToDelete.firstName} ${studentToDelete.lastName}was removed from the db` })
+    const studentToDelete = await Student.findByIdAndDelete(studentId);
+    response.status(202).json({
+      message: `${studentToDelete.firstName} ${studentToDelete.lastName}was removed from the db`,
+    });
   } catch (error) {
-    console.log(error)
-    response.status(500).json({ message: 'Something bad happened' })
+    console.log(error);
+    response.status(500).json({ message: "Something bad happened" });
   }
-})
+});
 
 // COHORTS ROUTES
 // Get all cohorts
 app.get("/api/cohorts", async (request, response) => {
-  const cohorts = await Cohort.find()
+  const cohorts = await Cohort.find();
   response.json(cohorts);
 });
 
 // Create one cohort
-app.post('/api/cohorts', async (request, response) => {
-  console.log(request.body)
-  const payload = request.body
+app.post("/api/cohorts", async (request, response) => {
+  console.log(request.body);
+  const payload = request.body;
   try {
-    const newCohort = await Cohort.create(payload)
-    response.status(201).json(newCohort)
+    const newCohort = await Cohort.create(payload);
+    response.status(201).json(newCohort);
   } catch (error) {
-    console.log(error)
-    response.status(500).json({ error, message: 'Somethin happened maybe on the server' })
-    }
-})
+    console.log(error);
+    response
+      .status(500)
+      .json({ error, message: "Somethin happened maybe on the server" });
+  }
+});
 
 // Get a specific cohort by ID
-app.get('/api/cohorts/:cohortId', async (request, response) => {
-  const { cohortId } = request.params
+app.get("/api/cohorts/:cohortId", async (request, response) => {
+  const { cohortId } = request.params;
 
-  const oneCohort = await Cohort.findById(cohortId)
+  const oneCohort = await Cohort.findById(cohortId);
 
-  response.json(oneCohort)
-})
+  response.json(oneCohort);
+});
 
 // Update a specific cohort by id
-app.put('/api/cohorts/:cohortId', async (request, response) => {
-  console.log(request.body)
-  const payload = request.body
+app.put("/api/cohorts/:cohortId", async (request, response) => {
+  console.log(request.body);
+  const payload = request.body;
   try {
-    const updatedCohort = await Cohort.findByIdAndUpdate(request.params.cohortId, payload, { new: true })
-    response.status(202).json(updatedCohort)
+    const updatedCohort = await Cohort.findByIdAndUpdate(
+      request.params.cohortId,
+      payload,
+      { new: true }
+    );
+    response.status(202).json(updatedCohort);
   } catch (error) {
-    console.log(error)
-    response.status(500).json({ message: 'Something bad happened' })
+    console.log(error);
+    response.status(500).json({ message: "Something bad happened" });
   }
-})
+});
 
 // Delete a specific cohort by id
-app.delete('/api/cohorts/:cohortId', async (request, response) => {
-  const { cohortId } = request.params
+app.delete("/api/cohorts/:cohortId", async (request, response) => {
+  const { cohortId } = request.params;
   try {
-    const cohortToDelete = await Cohort.findByIdAndDelete(cohortId)
-    response.status(202).json({ message: `${cohortToDelete.cohortName} was remove from the db` })
+    const cohortToDelete = await Cohort.findByIdAndDelete(cohortId);
+    response
+      .status(202)
+      .json({ message: `${cohortToDelete.cohortName} was remove from the db` });
   } catch (error) {
-    console.log(error)
-    response.status(500).json({ message: 'Something bad happened' })
+    console.log(error);
+    response.status(500).json({ message: "Something bad happened" });
   }
-})
-
+});
 
 // START SERVER
 app.listen(PORT, () => {
