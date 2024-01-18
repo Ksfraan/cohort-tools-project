@@ -13,7 +13,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5005"],
+    origin: ["http://localhost:5005", "http://localhost:5173"],
   })
 );
 app.use(express.json());
