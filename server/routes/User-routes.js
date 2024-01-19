@@ -1,15 +1,15 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const User = require('../models/User.model');
-const { isAuthenticated } = require('../middleware/jwt.middleware');
+const User = require("../models/User.model");
+const { isAuthenticated } = require("../middleware/jwt.middleware");
 
-router.get('/api/user/:id', isAuthenticated, async (req, res) => {
-    try {
-        const oneUser = await User.findById(req.params.id);
-        res.json(oneUser);
-    } catch (error) {
-        next(error);
-    }
+router.get("/:id", isAuthenticated, async (req, res) => {
+  try {
+    const oneUser = await User.findById(req.params.id);
+    res.json(oneUser);
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;
