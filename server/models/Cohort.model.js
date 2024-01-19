@@ -1,4 +1,3 @@
-// ./models/Book.model.js
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -32,10 +31,6 @@ const cohortSchema = new Schema({
     totalHours: { type: Number, default: 360 },
 });
 
-// CREATE MODEL
-// The collection name will default to the lowercased, plural form of the model name:
-//                          "Book" --> "books"
 const Cohort = mongoose.model('Cohort', cohortSchema);
 
-// EXPORT THE MODEL
 module.exports = Cohort;
