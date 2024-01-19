@@ -10,7 +10,7 @@ const { isAuthenticated } = require('./middleware/jwt.middleware');
 //STATIC DATA
 const studentsRoutes = require('./routes/students-route.js');
 const cohortsRoutes = require('./routes/cohort-routes.js');
-// const userRoutes = require('./routes/User-routes.js');
+const userRoutes = require('./routes/User-routes.js');
 const authRoutes = require('./routes/auth-routes.js');
 
 const app = express();

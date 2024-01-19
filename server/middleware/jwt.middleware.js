@@ -1,5 +1,5 @@
 // middleware/jwt.middleware.js
-
+require('dotenv').config();
 const { expressjwt: jwt } = require('express-jwt');
 
 // Instantiate the JWT token validation middleware
